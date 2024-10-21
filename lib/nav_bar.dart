@@ -49,21 +49,31 @@ class NavBar extends StatelessWidget {
   }
 }
 
-class NavItem extends StatelessWidget {
+class NavItem extends StatefulWidget {
   final String title;
   const NavItem({required this.title});
 
   @override
+  _NavItemState createState() => _NavItemState();
+}
+
+class _NavItemState extends State<NavItem> {
+  bool _isHovered = false;
+
+  @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        print('$title tapped');
-      },
+    return MouseRegion(
+      onEnter: (_) => setState(() {
+        _isHovered = true;
+      }),
+      onExit: (_) => setState(() {
+        _isHovered = false;
+      }),
       child: Text(
-        title,
-        style: const TextStyle(
+        widget.title,
+        style: TextStyle(
           fontSize: 16,
-          color: Color.fromRGBO(81, 81, 81, 1),
+          color: _isHovered ? Colors.white : Color.fromRGBO(132, 132, 132, 1),
         ),
       ),
     );
